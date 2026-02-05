@@ -7,7 +7,9 @@ export default auth((req) => {
 
     // Protect /albums and /admin routes
     if ((pathname.startsWith('/albums') || pathname.startsWith('/admin')) && !isLoggedIn) {
-        return NextResponse.redirect(new URL('/login', req.url));
+        const loginUrl = new URL('/login', req.url);
+        loginUrl.searchParams.set('callbackUrl', pathname);
+        return NextResponse.redirect(loginUrl);
     }
 
     return NextResponse.next();
