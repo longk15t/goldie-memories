@@ -164,8 +164,10 @@ export default function SortableAlbumsGrid({
     isAdmin: boolean;
 }) {
     const [albums, setAlbums] = useState(initialAlbums);
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
         setAlbums(initialAlbums);
     }, [initialAlbums]);
 
@@ -179,6 +181,16 @@ export default function SortableAlbumsGrid({
             coordinateGetter: sortableKeyboardCoordinates,
         })
     );
+
+    if (!mounted) {
+        return (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {albums.map((album) => (
+                    <div key={album.id} className="h-[400px] bg-stone-100/50 rounded-lg animate-pulse" />
+                ))}
+            </div>
+        );
+    }
 
     async function handleDragEnd(event: DragEndEvent) {
         const { active, over } = event;
