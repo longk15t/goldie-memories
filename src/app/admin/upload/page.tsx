@@ -97,7 +97,7 @@ export default function UploadPage() {
 
                 setProgress((prev) => ({ ...prev, [file.name]: "done" }));
             } catch (error) {
-                console.error(error);
+                console.error("Upload error for " + file.name + ":", error);
                 setProgress((prev) => ({ ...prev, [file.name]: "error" }));
             }
         }
