@@ -8,10 +8,13 @@ export const dynamic = 'force-dynamic'; // For demo purposes, or use revalidatio
 export default async function GalleryPage() {
     // Fetch albums with their media
     const albums = await prisma.album.findMany({
-        orderBy: { createdAt: 'desc' },
+        orderBy: [
+            { order: 'asc' },
+            { createdAt: 'desc' }
+        ],
         include: {
             media: {
-                orderBy: { createdAt: 'desc' }
+                orderBy: { order: 'asc' }
             }
         }
     });

@@ -5,7 +5,10 @@ import { NextResponse } from "next/server";
 export async function GET() {
     try {
         const albums = await prisma.album.findMany({
-            orderBy: { createdAt: "desc" },
+            orderBy: [
+                { order: "asc" },
+                { createdAt: "desc" }
+            ],
         });
         return NextResponse.json(albums);
     } catch (error) {
@@ -21,12 +24,18 @@ export async function POST(request: Request) {
 
         const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
+        const lastAlbum = await prisma.album.findFirst({
+            orderBy: { order: "desc" },
+            select: { order: true }
+        });
+        const nextOrder = (lastAlbum?.order ?? -1) + 1;
+
         const album = await prisma.album.create({
             data: {
                 title,
                 description,
                 slug,
-                // coverUrl could be passed or set later
+                order: nextOrder,
             },
         });
 
