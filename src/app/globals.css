@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
+
+  --color-gold-50: #fffbeb;
+  --color-gold-100: #fef3c7;
+  --color-gold-200: #fde68a;
+  --color-gold-300: #fcd34d;
+  --color-gold-400: #fbbf24;
+  --color-gold-500: #f59e0b;
+  --color-gold-600: #d97706;
+  --color-gold-700: #b45309;
+  --color-gold-800: #92400e;
+  --color-gold-900: #78350f;
+}
+
+/* Custom Base Styles */
+@layer base {
+  body {
+    @apply bg-[#F0F9FF] text-slate-800;
+  }
+}
+
+/* Glassmorphism Utilities */
+@utility glass {
+  @apply bg-white/60 backdrop-blur-lg border border-sky-100/50 shadow-sm;
+}
+
+@utility glass-hover {
+  @apply transition-all duration-300 hover:bg-white/80 hover:border-sky-200/50 hover:shadow-md;
+}
