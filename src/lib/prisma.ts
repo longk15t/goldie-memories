@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { PrismaLibSql } from '@prisma/adapter-libsql'
+import { PrismaLibSQL } from '@prisma/adapter-libsql'
 import { createClient } from '@libsql/client'
 
 const prismaClientSingleton = () => {
@@ -8,7 +8,7 @@ const prismaClientSingleton = () => {
 
     if (databaseUrl && databaseUrl.startsWith('libsql://')) {
         console.log('Initialize Prisma with LibSQL adapter');
-        const adapter = new PrismaLibSql({
+        const adapter = new PrismaLibSQL({
             url: databaseUrl,
             authToken: authToken,
         } as any)
