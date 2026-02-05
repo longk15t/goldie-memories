@@ -1,17 +1,19 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Star, LogIn, Loader2 } from "lucide-react";
 import Link from "next/link";
 
-export default function LoginPage() {
+function LoginForm() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get("callbackUrl") || "/albums";
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -28,7 +30,7 @@ export default function LoginPage() {
             if (result?.error) {
                 setError("Invalid username or password");
             } else {
-                router.push("/albums");
+                router.push(callbackUrl);
                 router.refresh();
             }
         } catch (err) {
@@ -37,6 +39,69 @@ export default function LoginPage() {
             setIsLoading(false);
         }
     };
+
+    return (
+        <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+                <label htmlFor="username" className="block text-sm font-medium text-stone-700 mb-2">
+                    Username
+                </label>
+                <input
+                    id="username"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="w-full px-4 py-3 bg-white border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all text-stone-800"
+                    placeholder="Enter username"
+                    required
+                    disabled={isLoading}
+                />
+            </div>
+
+            <div>
+                <label htmlFor="password" className="block text-sm font-medium text-stone-700 mb-2">
+                    Password
+                </label>
+                <input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full px-4 py-3 bg-white border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all text-stone-800"
+                    placeholder="Enter password"
+                    required
+                    disabled={isLoading}
+                />
+            </div>
+
+            {error && (
+                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                    {error}
+                </div>
+            )}
+
+            <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-6 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+            >
+                {isLoading ? (
+                    <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        Signing in...
+                    </>
+                ) : (
+                    <>
+                        <LogIn className="w-5 h-5" />
+                        Sign In
+                    </>
+                )}
+            </button>
+        </form>
+    );
+}
+
+export default function LoginPage() {
 
     return (
         <main className="min-h-screen flex flex-col relative overflow-hidden">
@@ -69,63 +134,9 @@ export default function LoginPage() {
                             <p className="text-stone-600">Sign in to manage your memories</p>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="space-y-5">
-                            <div>
-                                <label htmlFor="username" className="block text-sm font-medium text-stone-700 mb-2">
-                                    Username
-                                </label>
-                                <input
-                                    id="username"
-                                    type="text"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                    className="w-full px-4 py-3 bg-white border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all text-stone-800"
-                                    placeholder="Enter username"
-                                    required
-                                    disabled={isLoading}
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="password" className="block text-sm font-medium text-stone-700 mb-2">
-                                    Password
-                                </label>
-                                <input
-                                    id="password"
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full px-4 py-3 bg-white border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all text-stone-800"
-                                    placeholder="Enter password"
-                                    required
-                                    disabled={isLoading}
-                                />
-                            </div>
-
-                            {error && (
-                                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
-                                    {error}
-                                </div>
-                            )}
-
-                            <button
-                                type="submit"
-                                disabled={isLoading}
-                                className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-6 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
-                            >
-                                {isLoading ? (
-                                    <>
-                                        <Loader2 className="w-5 h-5 animate-spin" />
-                                        Signing in...
-                                    </>
-                                ) : (
-                                    <>
-                                        <LogIn className="w-5 h-5" />
-                                        Sign In
-                                    </>
-                                )}
-                            </button>
-                        </form>
+                        <Suspense fallback={<div className="flex justify-center p-8"><Loader2 className="w-8 h-8 animate-spin text-amber-500" /></div>}>
+                            <LoginForm />
+                        </Suspense>
 
                         <div className="mt-6 pt-6 border-t border-stone-200 text-center">
                             <p className="text-sm text-stone-500">
