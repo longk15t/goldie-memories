@@ -127,9 +127,9 @@ export default function Home() {
         <motion.div
           animate={{ y: [0, -15, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-20 left-10 md:left-40 bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-2xl rotate-6 hidden lg:block"
+          className="absolute top-1/4 left-5 md:left-10 bg-white/5 backdrop-blur-md border border-white/10 p-3 rounded-xl -rotate-12 hidden lg:block"
         >
-          <p className="text-white/40 text-[10px] uppercase tracking-widest font-bold font-serif">Boundless Love</p>
+          <p className="text-white/40 text-[10px] uppercase tracking-widest font-bold font-serif italic">Boundless Love</p>
         </motion.div>
       </section>
 
