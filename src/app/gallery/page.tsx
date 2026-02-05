@@ -19,12 +19,6 @@ export default async function GalleryPage() {
         }
     });
 
-    // Also fetch media that doesn't belong to any album (if any)
-    const uncategorizedMedia = await prisma.media.findMany({
-        where: { albumId: null },
-        orderBy: { createdAt: 'desc' }
-    });
-
     return (
         <main className="min-h-screen">
             <nav className="p-6 flex justify-between items-center max-w-7xl mx-auto w-full border-b border-stone-200">
@@ -63,16 +57,6 @@ export default async function GalleryPage() {
                             )}
                         </section>
                     ))}
-
-                    {uncategorizedMedia.length > 0 && (
-                        <section className="space-y-6">
-                            <div className="flex items-baseline gap-4 border-b border-stone-200 pb-2">
-                                <h2 className="font-serif text-2xl md:text-3xl text-stone-400">Uncategorized</h2>
-                                <span className="text-stone-400 text-sm">{uncategorizedMedia.length} memories</span>
-                            </div>
-                            <GalleryGrid items={uncategorizedMedia} />
-                        </section>
-                    )}
                 </div>
             </div>
         </main>
