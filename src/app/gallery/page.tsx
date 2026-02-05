@@ -1,9 +1,10 @@
-import prisma from "@/lib/prisma"; // Need to create lib/prisma
+import prisma from "@/lib/prisma";
 import GalleryGrid from "@/components/GalleryGrid";
 import { Star } from "lucide-react";
 import Link from "next/link";
+import { AnimatedGalleryContainer, AnimatedGallerySection } from "@/components/AnimatedGallery";
 
-export const dynamic = 'force-dynamic'; // For demo purposes, or use revalidation
+export const dynamic = 'force-dynamic';
 
 export default async function GalleryPage() {
     // Fetch albums with their media
@@ -37,27 +38,29 @@ export default async function GalleryPage() {
                     <h1 className="font-serif text-4xl text-stone-900 mb-2">Every moment of Gold</h1>
                 </header>
 
-                <div className="space-y-16">
+                <AnimatedGalleryContainer>
                     {albums.map(album => (
-                        <section key={album.id} className="space-y-6">
-                            <div className="flex flex-col gap-1 border-b border-stone-200 pb-4">
-                                <div className="flex items-baseline gap-4">
-                                    <h2 className="font-serif text-2xl md:text-3xl text-amber-600/90">{album.title}</h2>
-                                    <span className="text-stone-400 text-sm">{album.media.length} memories</span>
+                        <AnimatedGallerySection key={album.id}>
+                            <div className="space-y-6">
+                                <div className="flex flex-col gap-1 border-b border-stone-200 pb-4">
+                                    <div className="flex items-baseline gap-4">
+                                        <h2 className="font-serif text-2xl md:text-3xl text-amber-600/90">{album.title}</h2>
+                                        <span className="text-stone-400 text-sm">{album.media.length} memories</span>
+                                    </div>
+                                    {album.description && (
+                                        <p className="text-stone-500 text-sm max-w-2xl">{album.description}</p>
+                                    )}
                                 </div>
-                                {album.description && (
-                                    <p className="text-stone-500 text-sm max-w-2xl">{album.description}</p>
+
+                                {album.media.length > 0 ? (
+                                    <GalleryGrid items={album.media} />
+                                ) : (
+                                    <p className="text-stone-400 italic text-sm py-4">No photos in this album yet.</p>
                                 )}
                             </div>
-
-                            {album.media.length > 0 ? (
-                                <GalleryGrid items={album.media} />
-                            ) : (
-                                <p className="text-stone-400 italic text-sm py-4">No photos in this album yet.</p>
-                            )}
-                        </section>
+                        </AnimatedGallerySection>
                     ))}
-                </div>
+                </AnimatedGalleryContainer>
             </div>
         </main>
     );
