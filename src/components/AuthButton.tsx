@@ -19,7 +19,7 @@ export function AuthButton() {
         return (
             <button
                 onClick={() => signOut({ callbackUrl: "/" })}
-                className="flex items-center gap-2 text-sm font-medium text-stone-500 hover:text-amber-600 transition-colors"
+                className="flex items-center gap-2 text-sm font-bold text-stone-600 hover:text-amber-800 transition-colors uppercase tracking-widest"
             >
                 <LogOut className="w-4 h-4" />
                 Logout
@@ -30,7 +30,7 @@ export function AuthButton() {
     return (
         <Link
             href="/login"
-            className="flex items-center gap-2 text-sm font-medium text-stone-500 hover:text-amber-600 transition-colors"
+            className="flex items-center gap-2 text-sm font-bold text-stone-600 hover:text-amber-800 transition-colors uppercase tracking-widest"
         >
             <LogIn className="w-4 h-4" />
             Login

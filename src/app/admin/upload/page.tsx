@@ -115,13 +115,13 @@ export default function UploadPage() {
                 </header>
 
                 {/* Album Selector */}
-                <div className="glass p-6 rounded-2xl border border-stone-200 shadow-sm flex flex-col sm:flex-row gap-6 items-center justify-between">
+                <div className="glass p-6 rounded-2xl border border-amber-900/10 shadow-sm flex flex-col sm:flex-row gap-6 items-center justify-between">
                     <div className="flex flex-col gap-2 w-full">
-                        <label className="text-[10px] text-stone-400 uppercase tracking-widest font-bold">Select Album</label>
+                        <label className="text-[10px] text-stone-500 uppercase tracking-widest font-bold">Select Album</label>
                         <select
                             value={selectedAlbumId}
                             onChange={(e) => setSelectedAlbumId(e.target.value)}
-                            className="bg-white border border-stone-200 rounded-xl p-3 text-stone-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all appearance-none cursor-pointer"
+                            className="bg-white border border-amber-900/10 rounded-xl p-3 text-stone-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all appearance-none cursor-pointer font-medium"
                         >
                             <option value="">-- General / No Album --</option>
                             {albums.map(a => <option key={a.id} value={a.id}>{a.title}</option>)}
@@ -136,7 +136,7 @@ export default function UploadPage() {
                         {!isCreatingAlbum ? (
                             <button
                                 onClick={() => setIsCreatingAlbum(true)}
-                                className="w-full py-3 border-2 border-dashed border-stone-200 rounded-xl text-stone-400 hover:text-amber-600 hover:border-amber-200 hover:bg-amber-50/30 transition-all font-medium text-sm"
+                                className="w-full py-3 border-2 border-dashed border-amber-900/10 rounded-xl text-stone-400 hover:text-amber-700 hover:border-amber-300 hover:bg-amber-50/50 transition-all font-bold text-xs uppercase tracking-widest"
                             >
                                 + Create New Album
                             </button>
@@ -145,11 +145,11 @@ export default function UploadPage() {
                                 <input
                                     type="text"
                                     placeholder="Album Name..."
-                                    className="flex-1 bg-white border border-stone-200 rounded-xl p-3 text-stone-800 focus:outline-none focus:border-amber-500"
+                                    className="flex-1 bg-white border border-amber-900/10 rounded-xl p-3 text-stone-800 focus:outline-none focus:border-amber-500 font-medium"
                                     value={newAlbumName}
                                     onChange={e => setNewAlbumName(e.target.value)}
                                 />
-                                <button onClick={handleCreateAlbum} className="px-5 bg-amber-500 rounded-xl text-white hover:bg-amber-600 font-bold transition-colors shadow-lg shadow-amber-200">Add</button>
+                                <button onClick={handleCreateAlbum} className="px-5 bg-amber-500 rounded-xl text-white hover:bg-amber-700 font-bold transition-all shadow-lg shadow-amber-200/50">Add</button>
                                 <button onClick={() => setIsCreatingAlbum(false)} className="px-2 text-stone-400 hover:text-stone-600 transition-colors"><X /></button>
                             </div>
                         )}
@@ -159,19 +159,19 @@ export default function UploadPage() {
                 {/* Dropzone */}
                 <div
                     {...getRootProps()}
-                    className={`border-2 border-dashed rounded-[2.5rem] p-16 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 group ${isDragActive
-                            ? "border-amber-500 bg-amber-50/50 shadow-inner"
-                            : "border-stone-200 bg-white/40 hover:border-amber-300 hover:bg-amber-50/20"
+                    className={`border-2 border-dashed rounded-[2.5rem] p-16 flex flex-col items-center justify-center cursor-pointer transition-all duration-500 group ${isDragActive
+                        ? "border-amber-500 bg-amber-50/80 shadow-inner"
+                        : "border-amber-900/10 bg-white/40 hover:border-amber-400/40 hover:bg-amber-50/30"
                         }`}
                 >
                     <input {...getInputProps()} />
-                    <div className="w-20 h-20 rounded-3xl bg-white flex items-center justify-center mb-6 border border-stone-100 shadow-sm group-hover:scale-110 transition-transform duration-500">
+                    <div className="w-20 h-20 rounded-3xl bg-white flex items-center justify-center mb-6 border border-amber-900/5 shadow-sm group-hover:scale-110 transition-transform duration-500">
                         <Upload className="w-10 h-10 text-amber-500" />
                     </div>
                     <p className="text-xl font-bold text-stone-800 mb-2">
                         {isDragActive ? "Drop them here..." : "Drag & drop memories here"}
                     </p>
-                    <p className="text-sm text-stone-400 font-medium">or click to browse your library</p>
+                    <p className="text-xs text-stone-400 font-bold uppercase tracking-widest">or click to browse your library</p>
                 </div>
 
                 {/* File List */}
@@ -196,28 +196,28 @@ export default function UploadPage() {
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.95 }}
-                                    className="flex items-center justify-between p-5 bg-white rounded-2xl border border-stone-100 shadow-sm transition-all hover:shadow-md"
+                                    className="flex items-center justify-between p-5 bg-white/80 backdrop-blur-sm rounded-2xl border border-amber-900/5 shadow-sm transition-all hover:shadow-md"
                                 >
                                     <div className="flex items-center gap-4 overflow-hidden">
-                                        <div className="w-12 h-12 rounded-xl bg-stone-50 flex items-center justify-center text-[10px] font-black text-stone-300 border border-stone-100">
+                                        <div className="w-12 h-12 rounded-xl bg-amber-50/50 flex items-center justify-center text-[10px] font-black text-amber-900/30 border border-amber-900/5 uppercase tracking-tighter">
                                             {file.type.startsWith('image') ? 'IMG' : 'VID'}
                                         </div>
                                         <div className="flex flex-col truncate">
-                                            <span className="text-sm font-bold text-stone-700 truncate max-w-[200px] md:max-w-md">{file.name}</span>
-                                            <span className="text-[10px] text-stone-400 font-bold">{(file.size / 1024 / 1024).toFixed(2)} MB</span>
+                                            <span className="text-sm font-bold text-stone-800 truncate max-w-[200px] md:max-w-md">{file.name}</span>
+                                            <span className="text-[10px] text-stone-400 font-bold tracking-widest">{(file.size / 1024 / 1024).toFixed(2)} MB</span>
                                         </div>
                                     </div>
 
                                     <div className="flex items-center gap-4">
                                         {progress[file.name] === "processing" && <Loader2 className="w-5 h-5 text-amber-500 animate-spin" />}
-                                        {progress[file.name] === "uploading" && <span className="text-[10px] font-black text-amber-500 animate-pulse uppercase tracking-widest">Uploading</span>}
-                                        {progress[file.name] === "saving" && <span className="text-[10px] font-black text-blue-500 uppercase tracking-widest">Finishing</span>}
-                                        {progress[file.name] === "done" && <Check className="w-5 h-5 text-teal-500" />}
+                                        {progress[file.name] === "uploading" && <span className="text-[10px] font-black text-amber-600 animate-pulse uppercase tracking-widest">Uploading</span>}
+                                        {progress[file.name] === "saving" && <span className="text-[10px] font-black text-amber-500 uppercase tracking-widest">Finishing</span>}
+                                        {progress[file.name] === "done" && <Check className="w-5 h-5 text-amber-600" />}
                                         {progress[file.name] === "error" && <span className="text-[10px] font-black text-rose-500 uppercase tracking-widest">Failed</span>}
 
                                         {!uploading && !progress[file.name] && (
-                                            <button onClick={(e) => { e.stopPropagation(); removeFile(file.name); }} className="p-2 hover:bg-stone-50 rounded-lg transition-colors group">
-                                                <X className="w-4 h-4 text-stone-300 group-hover:text-stone-600" />
+                                            <button onClick={(e) => { e.stopPropagation(); removeFile(file.name); }} className="p-2 hover:bg-amber-50 rounded-lg transition-colors group">
+                                                <X className="w-4 h-4 text-stone-300 group-hover:text-amber-700" />
                                             </button>
                                         )}
                                     </div>
@@ -232,7 +232,7 @@ export default function UploadPage() {
                     <div className="flex justify-end pt-4">
                         <button
                             onClick={handleUpload}
-                            className="px-12 py-4 bg-stone-900 text-white font-bold rounded-2xl hover:bg-amber-600 transition-all hover:scale-[1.02] active:scale-95 shadow-xl shadow-stone-200 flex items-center gap-2"
+                            className="px-12 py-4 bg-stone-900 text-white font-bold rounded-2xl hover:bg-amber-600 transition-all hover:scale-[1.02] active:scale-95 shadow-xl shadow-stone-200 flex items-center gap-2 uppercase tracking-[0.15em] text-xs"
                         >
                             Start Securing Memories
                         </button>

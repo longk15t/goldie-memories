@@ -26,14 +26,14 @@ export default async function AlbumsPage() {
 
     return (
         <main className="min-h-screen">
-            <nav className="p-6 flex justify-between items-center max-w-7xl mx-auto w-full border-b border-stone-200">
-                <Link href="/" className="font-serif text-2xl font-bold tracking-tight text-stone-800 flex items-center gap-2">
+            <nav className="p-6 flex justify-between items-center max-w-7xl mx-auto w-full border-b border-amber-900/10">
+                <Link href="/" className="font-serif text-2xl font-bold tracking-tight text-stone-900 flex items-center gap-2">
                     <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
                     <span>Goldie Memories</span>
                 </Link>
-                <div className="flex gap-6 text-sm font-medium text-stone-500">
-                    <Link href="/albums" className="text-amber-600">Albums</Link>
-                    <Link href="/gallery" className="hover:text-amber-600 transition-colors">All Photos</Link>
+                <div className="flex gap-6 text-sm font-bold text-stone-600 uppercase tracking-widest">
+                    <Link href="/albums" className="text-amber-700">Albums</Link>
+                    <Link href="/gallery" className="hover:text-amber-700 transition-colors">All Photos</Link>
                 </div>
             </nav>
 
@@ -41,7 +41,7 @@ export default async function AlbumsPage() {
                 <header className="mb-12 flex flex-col md:flex-row justify-between items-center md:items-end gap-6">
                     <div className="text-center md:text-left">
                         <h1 className="font-serif text-4xl md:text-5xl text-stone-900 mb-4">Gold&apos;s albums</h1>
-                        <p className="text-stone-500 max-w-2xl">Organized chapters of his life journey</p>
+                        <p className="text-stone-600 font-medium max-w-2xl">Organized chapters of his life journey</p>
                     </div>
                     {session && <CreateAlbumDialog />}
                 </header>

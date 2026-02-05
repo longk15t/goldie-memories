@@ -22,14 +22,14 @@ export default async function GalleryPage() {
 
     return (
         <main className="min-h-screen">
-            <nav className="p-6 flex justify-between items-center max-w-7xl mx-auto w-full border-b border-stone-200">
-                <Link href="/" className="font-serif text-2xl font-bold tracking-tight text-stone-800 flex items-center gap-2">
+            <nav className="p-6 flex justify-between items-center max-w-7xl mx-auto w-full border-b border-amber-900/10">
+                <Link href="/" className="font-serif text-2xl font-bold tracking-tight text-stone-900 flex items-center gap-2">
                     <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
                     <span>Goldie Memories</span>
                 </Link>
-                <div className="flex gap-6 text-sm font-medium text-stone-500">
-                    <Link href="/albums" className="hover:text-amber-600 transition-colors">Albums</Link>
-                    <Link href="/gallery" className="text-amber-600">All Photos</Link>
+                <div className="flex gap-6 text-sm font-bold text-stone-600 uppercase tracking-widest">
+                    <Link href="/albums" className="hover:text-amber-700 transition-colors">Albums</Link>
+                    <Link href="/gallery" className="text-amber-700">All Photos</Link>
                 </div>
             </nav>
 
@@ -38,13 +38,13 @@ export default async function GalleryPage() {
                     {albums.map((album: any) => (
                         <AnimatedGallerySection key={album.id}>
                             <div className="space-y-6">
-                                <div className="flex flex-col gap-1 border-b border-stone-200 pb-4">
+                                <div className="flex flex-col gap-1 border-b border-amber-900/10 pb-4">
                                     <div className="flex items-baseline gap-4">
-                                        <h2 className="font-serif text-2xl md:text-3xl text-amber-600/90">{album.title}</h2>
-                                        <span className="text-stone-400 text-sm">{album.media?.length || 0} memories</span>
+                                        <h2 className="font-serif text-2xl md:text-3xl text-amber-900/80">{album.title}</h2>
+                                        <span className="text-stone-500 text-[10px] font-bold uppercase tracking-widest">{album.media?.length || 0} memories</span>
                                     </div>
                                     {album.description && (
-                                        <p className="text-stone-500 text-sm max-w-2xl">{album.description}</p>
+                                        <p className="text-stone-600 text-sm max-w-2xl font-medium">{album.description}</p>
                                     )}
                                 </div>
 
