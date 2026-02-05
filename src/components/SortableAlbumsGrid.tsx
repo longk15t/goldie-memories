@@ -50,53 +50,77 @@ function SortableAlbumCard({ album, isSortable }: { album: AlbumWithMedia; isSor
         opacity: isDragging ? 0.3 : 1
     };
 
-    const cardContent = (
-        <div className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 h-full">
-            <div className="aspect-[4/3] bg-stone-100 relative overflow-hidden flex items-center justify-center">
-                {isSortable && (
-                    <div className="absolute top-4 left-4 z-30 bg-black/40 p-2 rounded-full backdrop-blur-sm text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing" {...listeners} {...attributes}>
-                        <GripVertical className="w-5 h-5" />
-                    </div>
-                )}
+    // Deterministic randomization based on album ID
+    const getRotation = (index: number) => {
+        const hash = album.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) + index * 137;
+        return (hash % 24) - 12; // -12 to 12 degrees
+    };
 
-                {album.coverUrl ? (
-                    <Image
-                        src={album.coverUrl}
-                        alt={album.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                ) : album.media.length > 0 ? (
-                    <div className="relative w-full h-full p-8 group-hover:scale-105 transition-transform duration-700">
-                        {album.media.slice(0, 3).map((item, i) => (
-                            <div
-                                key={item.url}
-                                className="absolute top-1/2 left-1/2 w-64 h-48 bg-stone-100 rounded-lg shadow-md border border-white overflow-hidden"
-                                style={{
-                                    transform: `translate(-50%, -50%) rotate(${(i - 1) * 8}deg) translateY(${i * -4}px) scale(${1 - i * 0.05})`,
-                                    zIndex: 3 - i
-                                }}
-                            >
-                                {item.type === 'video' ? (
-                                    <video src={item.url} className="object-cover w-full h-full" muted playsInline />
-                                ) : (
-                                    <Image src={item.url} alt="Thumbnail" fill className="object-cover" />
-                                )}
+    const getOffset = (index: number) => {
+        const hash = album.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) + index * 59;
+        const x = (hash % 20) - 10;
+        const y = ((hash * 7) % 20) - 10;
+        return { x, y };
+    };
+
+    const cardContent = (
+        <div className="group block h-full">
+            {/* Wooden Frame Container */}
+            <div className="relative p-3 bg-[#3d2b1f] rounded-lg shadow-2xl border-t-2 border-l-2 border-[#5c4033] border-b-4 border-r-4 border-[#1a120b] transition-transform duration-300 group-hover:-translate-y-1">
+                {/* Inner Bevel */}
+                <div className="bg-[#2a1d15] p-1 rounded shadow-inner">
+                    <div className="aspect-[4/3] bg-stone-900/40 relative overflow-hidden flex items-center justify-center rounded-sm">
+                        {isSortable && (
+                            <div className="absolute top-4 left-4 z-40 bg-black/60 p-2 rounded-full backdrop-blur-sm text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing" {...listeners} {...attributes}>
+                                <GripVertical className="w-4 h-4" />
                             </div>
-                        ))}
+                        )}
+
+                        <div className="relative w-full h-full p-4">
+                            {album.media.length > 0 ? (
+                                album.media.slice(0, 4).reverse().map((item, i) => {
+                                    const rot = getRotation(i);
+                                    const offset = getOffset(i);
+                                    const actualIndex = album.media.slice(0, 4).length - 1 - i;
+
+                                    return (
+                                        <div
+                                            key={item.url}
+                                            className="absolute top-1/2 left-1/2 w-[85%] h-[85%] bg-white p-2 pb-8 shadow-xl border border-stone-200"
+                                            style={{
+                                                transform: `translate(-50%, -50%) translate(${offset.x}px, ${offset.y}px) rotate(${rot}deg)`,
+                                                zIndex: actualIndex
+                                            }}
+                                        >
+                                            <div className="relative w-full h-full bg-stone-100 overflow-hidden">
+                                                {item.type === 'video' ? (
+                                                    <video src={item.url} className="object-cover w-full h-full" muted playsInline />
+                                                ) : (
+                                                    <Image src={item.url} alt="Thumbnail" fill className="object-cover" />
+                                                )}
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            ) : (
+                                <div className="flex flex-col items-center justify-center text-amber-900/40 p-8">
+                                    <FolderHeart className="w-12 h-12 mb-2" />
+                                    <span className="text-xs font-serif font-medium uppercase tracking-widest">Empty Album</span>
+                                </div>
+                            )}
+                        </div>
                     </div>
-                ) : (
-                    <div className="flex flex-col items-center justify-center text-stone-400">
-                        <FolderHeart className="w-12 h-12 mb-2" />
-                        <span className="text-xs font-medium">Empty</span>
-                    </div>
-                )}
+                </div>
             </div>
-            <div className="p-6">
-                <h2 className="text-2xl font-serif text-stone-800 mb-2 group-hover:text-amber-600 transition-colors">{album.title}</h2>
-                <p className="text-stone-500 text-sm line-clamp-2 mb-4">{album.description || "No description"}</p>
-                <div className="flex items-center text-xs text-stone-400 font-medium uppercase tracking-wider">
-                    <span>{album._count.media} Memories</span>
+
+            {/* Title & Info - Outside frame or styled as a plaque? */}
+            <div className="mt-4 px-2">
+                <h2 className="text-xl font-serif text-stone-800 mb-1 group-hover:text-amber-700 transition-colors leading-tight">{album.title}</h2>
+                <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-stone-400 font-serif uppercase tracking-[0.2em]">
+                        {album._count.media} Memories
+                    </span>
+                    <div className="h-[1px] flex-1 mx-3 bg-stone-200" />
                 </div>
             </div>
         </div>
