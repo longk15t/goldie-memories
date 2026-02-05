@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { X } from "lucide-react";
+import { X, Play } from "lucide-react";
 
 type MediaItem = {
     id: string;
@@ -44,14 +44,22 @@ export default function GalleryGrid({ items }: { items: MediaItem[] }) {
                         <div className="relative w-full">
                             {/* Aspect Ratio preservation logic if width/height known, else auto */}
                             {item.type === 'video' ? (
-                                <video
-                                    src={item.url}
-                                    className="w-full h-auto object-cover rounded-md"
-                                    muted
-                                    playsInline
-                                    onMouseOver={e => e.currentTarget.play()}
-                                    onMouseOut={e => { e.currentTarget.pause(); e.currentTarget.currentTime = 0; }}
-                                />
+                                <div className="relative">
+                                    <video
+                                        src={item.url}
+                                        className="w-full h-auto object-cover rounded-md"
+                                        muted
+                                        playsInline
+                                        onMouseOver={e => e.currentTarget.play()}
+                                        onMouseOut={e => { e.currentTarget.pause(); e.currentTarget.currentTime = 0; }}
+                                    />
+                                    {/* Play Icon Overlay */}
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 shadow-lg transition-transform duration-300 group-hover:scale-110">
+                                            <Play className="w-6 h-6 text-white fill-white translate-x-0.5" />
+                                        </div>
+                                    </div>
+                                </div>
                             ) : (
                                 <Image
                                     src={item.url}
