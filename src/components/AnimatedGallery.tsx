@@ -39,9 +39,9 @@ export function AnimatedGalleryContainer({ children }: { children: ReactNode }) 
     );
 }
 
-export function AnimatedGallerySection({ children }: { children: ReactNode }) {
+export function AnimatedGallerySection({ children, id }: { children: ReactNode; id?: string }) {
     return (
-        <motion.section variants={item}>
+        <motion.section variants={item} id={id}>
             {children}
         </motion.section>
     );

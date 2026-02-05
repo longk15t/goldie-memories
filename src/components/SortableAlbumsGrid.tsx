@@ -28,7 +28,7 @@ type AlbumWithMedia = {
     description: string | null;
     slug: string;
     coverUrl: string | null;
-    order: number;
+    order?: number;
     _count: { media: number };
     media: { url: string; type: string }[];
 };
