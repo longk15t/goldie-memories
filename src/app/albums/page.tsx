@@ -40,8 +40,8 @@ export default async function AlbumsPage() {
             <div className="max-w-7xl mx-auto py-12 px-4">
                 <header className="mb-12 flex flex-col md:flex-row justify-between items-center md:items-end gap-6">
                     <div className="text-center md:text-left">
-                        <h1 className="font-serif text-4xl md:text-5xl text-stone-900 mb-4">Memory Collections</h1>
-                        <p className="text-stone-500 max-w-2xl">Organized chapters of the journey.</p>
+                        <h1 className="font-serif text-4xl md:text-5xl text-stone-900 mb-4">Gold&apos;s albums</h1>
+                        <p className="text-stone-500 max-w-2xl">Organized chapters of the his life journey</p>
                     </div>
                     {session && <CreateAlbumDialog />}
                 </header>
