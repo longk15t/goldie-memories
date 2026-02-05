@@ -33,35 +33,30 @@ export default async function GalleryPage() {
                 </div>
             </nav>
 
-            <div className="max-w-[1600px] mx-auto py-8 px-4">
-                <header className="mb-12">
-                    <h1 className="font-serif text-4xl text-stone-900 mb-2">Every moment of Gold</h1>
-                </header>
 
-                <AnimatedGalleryContainer>
-                    {albums.map(album => (
-                        <AnimatedGallerySection key={album.id}>
-                            <div className="space-y-6">
-                                <div className="flex flex-col gap-1 border-b border-stone-200 pb-4">
-                                    <div className="flex items-baseline gap-4">
-                                        <h2 className="font-serif text-2xl md:text-3xl text-amber-600/90">{album.title}</h2>
-                                        <span className="text-stone-400 text-sm">{album.media.length} memories</span>
-                                    </div>
-                                    {album.description && (
-                                        <p className="text-stone-500 text-sm max-w-2xl">{album.description}</p>
-                                    )}
-                                </div>
-
-                                {album.media.length > 0 ? (
-                                    <GalleryGrid items={album.media} />
-                                ) : (
-                                    <p className="text-stone-400 italic text-sm py-4">No photos in this album yet.</p>
-                                )}
+            {albums.map(album => (
+                <AnimatedGallerySection key={album.id}>
+                    <div className="space-y-6">
+                        <div className="flex flex-col gap-1 border-b border-stone-200 pb-4">
+                            <div className="flex items-baseline gap-4">
+                                <h2 className="font-serif text-2xl md:text-3xl text-amber-600/90">{album.title}</h2>
+                                <span className="text-stone-400 text-sm">{album.media.length} memories</span>
                             </div>
-                        </AnimatedGallerySection>
-                    ))}
-                </AnimatedGalleryContainer>
-            </div>
-        </main>
+                            {album.description && (
+                                <p className="text-stone-500 text-sm max-w-2xl">{album.description}</p>
+                            )}
+                        </div>
+
+                        {album.media.length > 0 ? (
+                            <GalleryGrid items={album.media} />
+                        ) : (
+                            <p className="text-stone-400 italic text-sm py-4">No photos in this album yet.</p>
+                        )}
+                    </div>
+                </AnimatedGallerySection>
+            ))}
+        </AnimatedGalleryContainer>
+            </div >
+        </main >
     );
 }
