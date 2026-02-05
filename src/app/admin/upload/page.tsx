@@ -105,38 +105,38 @@ export default function UploadPage() {
     };
 
     return (
-        <div className="min-h-screen bg-stone-950 text-stone-100 p-8">
+        <div className="min-h-screen py-12 px-6">
             <div className="max-w-3xl mx-auto space-y-8">
-                <header className="flex justify-between items-center border-b border-white/10 pb-6">
-                    <h1 className="text-3xl font-serif text-white">Upload Memories</h1>
-                    <Link href="/gallery" className="text-sm text-stone-400 hover:text-white flex items-center gap-1">
+                <header className="flex justify-between items-center border-b border-stone-200 pb-6">
+                    <h1 className="text-3xl font-serif text-stone-900">Upload Memories</h1>
+                    <Link href="/gallery" className="text-sm text-amber-700 hover:text-amber-600 flex items-center gap-1 font-medium transition-colors">
                         Go to Gallery <ArrowRight className="w-4 h-4" />
                     </Link>
                 </header>
 
                 {/* Album Selector */}
-                <div className="bg-white/5 p-4 rounded-xl border border-white/10 flex flex-col sm:flex-row gap-4 items-center justify-between">
-                    <div className="flex flex-col gap-1 w-full">
-                        <label className="text-xs text-stone-400 uppercase tracking-widest">Select Album</label>
+                <div className="glass p-6 rounded-2xl border border-stone-200 shadow-sm flex flex-col sm:flex-row gap-6 items-center justify-between">
+                    <div className="flex flex-col gap-2 w-full">
+                        <label className="text-[10px] text-stone-400 uppercase tracking-widest font-bold">Select Album</label>
                         <select
                             value={selectedAlbumId}
                             onChange={(e) => setSelectedAlbumId(e.target.value)}
-                            className="bg-black/20 border border-white/10 rounded-lg p-2 text-white focus:outline-none focus:border-amber-500"
+                            className="bg-white border border-stone-200 rounded-xl p-3 text-stone-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all appearance-none cursor-pointer"
                         >
                             <option value="">-- General / No Album --</option>
                             {albums.map(a => <option key={a.id} value={a.id}>{a.title}</option>)}
                         </select>
                     </div>
 
-                    <div className="flex items-end pb-1">
-                        <span className="text-stone-500 text-sm px-2">or</span>
+                    <div className="flex items-center">
+                        <span className="text-stone-300 text-xs font-bold px-2 uppercase tracking-tighter">or</span>
                     </div>
 
                     <div className="w-full">
                         {!isCreatingAlbum ? (
                             <button
                                 onClick={() => setIsCreatingAlbum(true)}
-                                className="w-full py-2 border border-dashed border-stone-600 rounded-lg text-stone-400 hover:text-white hover:border-stone-400 transition-colors"
+                                className="w-full py-3 border-2 border-dashed border-stone-200 rounded-xl text-stone-400 hover:text-amber-600 hover:border-amber-200 hover:bg-amber-50/30 transition-all font-medium text-sm"
                             >
                                 + Create New Album
                             </button>
@@ -144,13 +144,13 @@ export default function UploadPage() {
                             <div className="flex gap-2">
                                 <input
                                     type="text"
-                                    placeholder="Album Name (e.g. Kindergarten)"
-                                    className="flex-1 bg-black/20 border border-white/10 rounded-lg p-2 text-white"
+                                    placeholder="Album Name..."
+                                    className="flex-1 bg-white border border-stone-200 rounded-xl p-3 text-stone-800 focus:outline-none focus:border-amber-500"
                                     value={newAlbumName}
                                     onChange={e => setNewAlbumName(e.target.value)}
                                 />
-                                <button onClick={handleCreateAlbum} className="px-4 bg-amber-600 rounded-lg text-white hover:bg-amber-500">Add</button>
-                                <button onClick={() => setIsCreatingAlbum(false)} className="px-2 text-stone-400 hover:text-white"><X /></button>
+                                <button onClick={handleCreateAlbum} className="px-5 bg-amber-500 rounded-xl text-white hover:bg-amber-600 font-bold transition-colors shadow-lg shadow-amber-200">Add</button>
+                                <button onClick={() => setIsCreatingAlbum(false)} className="px-2 text-stone-400 hover:text-stone-600 transition-colors"><X /></button>
                             </div>
                         )}
                     </div>
@@ -159,29 +159,31 @@ export default function UploadPage() {
                 {/* Dropzone */}
                 <div
                     {...getRootProps()}
-                    className={`border-2 border-dashed rounded-2xl p-12 flex flex-col items-center justify-center cursor-pointer transition-colors ${isDragActive ? "border-amber-500 bg-amber-500/10" : "border-white/10 hover:border-white/20 hover:bg-white/5"
+                    className={`border-2 border-dashed rounded-[2.5rem] p-16 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 group ${isDragActive
+                            ? "border-amber-500 bg-amber-50/50 shadow-inner"
+                            : "border-stone-200 bg-white/40 hover:border-amber-300 hover:bg-amber-50/20"
                         }`}
                 >
                     <input {...getInputProps()} />
-                    <div className="w-16 h-16 rounded-full bg-stone-900 flex items-center justify-center mb-4 border border-white/10">
-                        <Upload className="w-8 h-8 text-amber-500" />
+                    <div className="w-20 h-20 rounded-3xl bg-white flex items-center justify-center mb-6 border border-stone-100 shadow-sm group-hover:scale-110 transition-transform duration-500">
+                        <Upload className="w-10 h-10 text-amber-500" />
                     </div>
-                    <p className="text-lg font-medium text-white mb-2">
-                        {isDragActive ? "Drop files here..." : "Drag & drop memories here"}
+                    <p className="text-xl font-bold text-stone-800 mb-2">
+                        {isDragActive ? "Drop them here..." : "Drag & drop memories here"}
                     </p>
-                    <p className="text-sm text-stone-500">or click to browse photos/videos</p>
+                    <p className="text-sm text-stone-400 font-medium">or click to browse your library</p>
                 </div>
 
                 {/* File List */}
                 <AnimatePresence>
                     {files.length > 0 && (
                         <div className="space-y-3">
-                            <div className="flex justify-between items-center text-sm text-stone-400 uppercase tracking-widest px-2">
+                            <div className="flex justify-between items-center text-[10px] text-stone-400 uppercase tracking-[0.2em] font-bold px-2">
                                 <span>Selected Files ({files.length})</span>
                                 {!uploading && (
                                     <button
                                         onClick={() => setFiles([])}
-                                        className="hover:text-red-400"
+                                        className="hover:text-amber-600 transition-colors"
                                     >
                                         Clear All
                                     </button>
@@ -191,31 +193,31 @@ export default function UploadPage() {
                             {files.map((file) => (
                                 <motion.div
                                     key={file.name}
-                                    initial={{ opacity: 0, height: 0 }}
-                                    animate={{ opacity: 1, height: "auto" }}
-                                    exit={{ opacity: 0, height: 0 }}
-                                    className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/5"
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.95 }}
+                                    className="flex items-center justify-between p-5 bg-white rounded-2xl border border-stone-100 shadow-sm transition-all hover:shadow-md"
                                 >
-                                    <div className="flex items-center gap-3 overflow-hidden">
-                                        <div className="w-10 h-10 rounded bg-stone-800 flex items-center justify-center text-xs text-stone-500 overflow-hidden">
+                                    <div className="flex items-center gap-4 overflow-hidden">
+                                        <div className="w-12 h-12 rounded-xl bg-stone-50 flex items-center justify-center text-[10px] font-black text-stone-300 border border-stone-100">
                                             {file.type.startsWith('image') ? 'IMG' : 'VID'}
                                         </div>
                                         <div className="flex flex-col truncate">
-                                            <span className="text-sm font-medium text-white truncate max-w-[200px]">{file.name}</span>
-                                            <span className="text-xs text-stone-500">{(file.size / 1024 / 1024).toFixed(2)} MB</span>
+                                            <span className="text-sm font-bold text-stone-700 truncate max-w-[200px] md:max-w-md">{file.name}</span>
+                                            <span className="text-[10px] text-stone-400 font-bold">{(file.size / 1024 / 1024).toFixed(2)} MB</span>
                                         </div>
                                     </div>
 
                                     <div className="flex items-center gap-4">
-                                        {progress[file.name] === "processing" && <Loader2 className="w-4 h-4 text-amber-500 animate-spin" />}
-                                        {progress[file.name] === "uploading" && <span className="text-xs text-amber-500 animate-pulse">Uploading...</span>}
-                                        {progress[file.name] === "saving" && <span className="text-xs text-blue-400">Saving...</span>}
-                                        {progress[file.name] === "done" && <Check className="w-5 h-5 text-green-500" />}
-                                        {progress[file.name] === "error" && <span className="text-xs text-red-500">Failed</span>}
+                                        {progress[file.name] === "processing" && <Loader2 className="w-5 h-5 text-amber-500 animate-spin" />}
+                                        {progress[file.name] === "uploading" && <span className="text-[10px] font-black text-amber-500 animate-pulse uppercase tracking-widest">Uploading</span>}
+                                        {progress[file.name] === "saving" && <span className="text-[10px] font-black text-blue-500 uppercase tracking-widest">Finishing</span>}
+                                        {progress[file.name] === "done" && <Check className="w-5 h-5 text-teal-500" />}
+                                        {progress[file.name] === "error" && <span className="text-[10px] font-black text-rose-500 uppercase tracking-widest">Failed</span>}
 
                                         {!uploading && !progress[file.name] && (
-                                            <button onClick={(e) => { e.stopPropagation(); removeFile(file.name); }}>
-                                                <X className="w-4 h-4 text-stone-500 hover:text-white" />
+                                            <button onClick={(e) => { e.stopPropagation(); removeFile(file.name); }} className="p-2 hover:bg-stone-50 rounded-lg transition-colors group">
+                                                <X className="w-4 h-4 text-stone-300 group-hover:text-stone-600" />
                                             </button>
                                         )}
                                     </div>
@@ -227,12 +229,12 @@ export default function UploadPage() {
 
                 {/* Upload Button */}
                 {files.length > 0 && !uploading && (
-                    <div className="flex justify-end">
+                    <div className="flex justify-end pt-4">
                         <button
                             onClick={handleUpload}
-                            className="px-8 py-3 bg-amber-500 text-stone-900 font-bold rounded-full hover:bg-amber-400 transition-colors shadow-lg shadow-amber-500/20"
+                            className="px-12 py-4 bg-stone-900 text-white font-bold rounded-2xl hover:bg-amber-600 transition-all hover:scale-[1.02] active:scale-95 shadow-xl shadow-stone-200 flex items-center gap-2"
                         >
-                            Start Upload
+                            Start Securing Memories
                         </button>
                     </div>
                 )}

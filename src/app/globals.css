@@ -19,8 +19,8 @@
 /* Custom Base Styles */
 @layer base {
   body {
-    @apply text-slate-800 antialiased;
-    background: linear-gradient(to bottom, #BAE6FD 0%, #F0F9FF 100%);
+    @apply text-stone-800 antialiased;
+    background: linear-gradient(to bottom, #f5f5f4 0%, #fafaf9 100%);
     background-attachment: fixed;
     min-height: 100vh;
   }
@@ -28,9 +28,9 @@
 
 /* Glassmorphism Utilities */
 @utility glass {
-  @apply bg-white/60 backdrop-blur-lg border border-sky-100/50 shadow-sm;
+  @apply bg-white/60 backdrop-blur-lg border border-stone-200/50 shadow-sm;
 }
 
 @utility glass-hover {
-  @apply transition-all duration-300 hover:bg-white/80 hover:border-sky-200/50 hover:shadow-md;
+  @apply transition-all duration-300 hover:bg-white/80 hover:border-amber-200/50 hover:shadow-md;
 }
