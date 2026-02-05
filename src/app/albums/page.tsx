@@ -2,10 +2,13 @@ import prisma from "@/lib/prisma";
 import Link from "next/link";
 import Image from "next/image";
 import { Star, FolderHeart } from "lucide-react";
+import CreateAlbumDialog from "@/components/CreateAlbumDialog";
+import { auth } from "@/lib/auth";
 
 export const dynamic = 'force-dynamic';
 
 export default async function AlbumsPage() {
+    const session = await auth();
     const albums = await prisma.album.findMany({
         orderBy: { createdAt: 'desc' },
         include: {
@@ -32,9 +35,12 @@ export default async function AlbumsPage() {
             </nav>
 
             <div className="max-w-7xl mx-auto py-12 px-4">
-                <header className="mb-12 text-center md:text-left">
-                    <h1 className="font-serif text-4xl md:text-5xl text-stone-900 mb-4">Memory Collections</h1>
-                    <p className="text-stone-500 max-w-2xl">Organized chapters of the journey.</p>
+                <header className="mb-12 flex flex-col md:flex-row justify-between items-center md:items-end gap-6">
+                    <div className="text-center md:text-left">
+                        <h1 className="font-serif text-4xl md:text-5xl text-stone-900 mb-4">Memory Collections</h1>
+                        <p className="text-stone-500 max-w-2xl">Organized chapters of the journey.</p>
+                    </div>
+                    {session && <CreateAlbumDialog />}
                 </header>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
