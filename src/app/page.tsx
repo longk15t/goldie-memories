@@ -72,7 +72,7 @@ export default function Home() {
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-200 text-xs uppercase tracking-[0.2em] font-bold backdrop-blur-md"
             >
               <Heart className="w-3 h-3 fill-amber-400 text-amber-400" />
-              <span>A Father&apos;s Journey</span>
+              <span>Gold&apos;s Life, Through My Eyes</span>
             </motion.div>
 
             <div className="space-y-4">
