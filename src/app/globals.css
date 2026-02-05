@@ -19,7 +19,10 @@
 /* Custom Base Styles */
 @layer base {
   body {
-    @apply bg-[#F0F9FF] text-slate-800;
+    @apply text-slate-800 antialiased;
+    background: linear-gradient(to bottom, #BAE6FD 0%, #F0F9FF 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
   }
 }
 
