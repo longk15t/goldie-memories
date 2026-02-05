@@ -10,10 +10,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {
-                // Hard-coded credentials check
+                const adminUsername = process.env.ADMIN_USERNAME;
+                const adminPassword = process.env.ADMIN_PASSWORD;
+
                 if (
-                    credentials?.username === "goldietran" &&
-                    credentials?.password === "Abcd@200244"
+                    credentials?.username === adminUsername &&
+                    credentials?.password === adminPassword &&
+                    adminUsername && adminPassword
                 ) {
                     return {
                         id: "1",
