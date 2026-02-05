@@ -64,11 +64,6 @@ export default function GalleryGrid({ items }: { items: MediaItem[] }) {
                             )}
 
                             <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-300 pointer-events-none" />
-                            {item.caption && (
-                                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0 text-white text-sm font-medium">
-                                    {item.caption}
-                                </div>
-                            )}
                         </div>
                     </motion.div>
                 ))}
