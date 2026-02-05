@@ -17,7 +17,7 @@ export default async function AlbumsPage() {
         include: {
             _count: { select: { media: true } },
             media: {
-                take: 3,
+                take: 10,
                 orderBy: { createdAt: 'desc' },
                 select: { url: true, type: true }
             }

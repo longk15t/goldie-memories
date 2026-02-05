@@ -43,6 +43,16 @@ function SortableAlbumCard({ album, isSortable }: { album: AlbumWithMedia; isSor
         isDragging
     } = useSortable({ id: album.id, disabled: !isSortable });
 
+    const [displayMedia, setDisplayMedia] = useState<typeof album.media>([]);
+
+    useEffect(() => {
+        // Truly random shuffle on every mount/visit
+        const shuffled = [...album.media]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 4);
+        setDisplayMedia(shuffled);
+    }, [album.media]);
+
     const style = {
         transform: CSS.Transform.toString(transform),
         transition,
@@ -50,7 +60,7 @@ function SortableAlbumCard({ album, isSortable }: { album: AlbumWithMedia; isSor
         opacity: isDragging ? 0.3 : 1
     };
 
-    // Deterministic randomization based on album ID
+    // Deterministic randomization for rotations/offsets so they stay visually pleasing
     const getRotation = (index: number) => {
         const hash = album.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) + index * 137;
         return (hash % 24) - 12; // -12 to 12 degrees
@@ -77,11 +87,11 @@ function SortableAlbumCard({ album, isSortable }: { album: AlbumWithMedia; isSor
                         )}
 
                         <div className="relative w-full h-full p-4">
-                            {album.media.length > 0 ? (
-                                album.media.slice(0, 4).reverse().map((item, i) => {
+                            {displayMedia.length > 0 ? (
+                                displayMedia.slice().reverse().map((item, i) => {
                                     const rot = getRotation(i);
                                     const offset = getOffset(i);
-                                    const actualIndex = album.media.slice(0, 4).length - 1 - i;
+                                    const actualIndex = displayMedia.length - 1 - i;
 
                                     return (
                                         <div
@@ -113,7 +123,7 @@ function SortableAlbumCard({ album, isSortable }: { album: AlbumWithMedia; isSor
                 </div>
             </div>
 
-            {/* Title & Info - Outside frame or styled as a plaque? */}
+            {/* Title & Info */}
             <div className="mt-4 px-2">
                 <h2 className="text-xl font-serif text-stone-800 mb-1 group-hover:text-amber-700 transition-colors leading-tight">{album.title}</h2>
                 <div className="flex items-center justify-between">
