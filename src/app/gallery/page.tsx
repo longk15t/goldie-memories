@@ -9,13 +9,14 @@ export const dynamic = 'force-dynamic';
 export default async function GalleryPage() {
     // Fetch albums with their media
     const albums = await prisma.album.findMany({
-        orderBy: [
-            { order: 'asc' },
-            { createdAt: 'desc' }
-        ],
+        orderBy: {
+            createdAt: 'desc'
+        },
         include: {
             media: {
-                orderBy: { order: 'asc' }
+                orderBy: {
+                    createdAt: 'desc'
+                }
             }
         }
     });

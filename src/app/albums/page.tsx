@@ -10,10 +10,9 @@ export const dynamic = 'force-dynamic';
 export default async function AlbumsPage() {
     const session = await auth();
     const albums = await prisma.album.findMany({
-        orderBy: [
-            { order: 'asc' },
-            { createdAt: 'desc' }
-        ],
+        orderBy: {
+            createdAt: 'desc'
+        },
         include: {
             _count: { select: { media: true } },
             media: {
