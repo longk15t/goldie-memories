@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+// @ts-ignore - Runtime uses PrismaLibSQL while types might suggest PrismaLibSql
 import { PrismaLibSQL } from '@prisma/adapter-libsql'
 import { createClient } from '@libsql/client'
 
