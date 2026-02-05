@@ -54,13 +54,13 @@ export default function TimelineNav({ items }: { items: TimelineItem[] }) {
     }, [items]);
 
     return (
-        <nav className="fixed left-8 top-1/2 -translate-y-1/2 z-40 hidden xl:block">
+        <nav className="fixed left-12 top-1/2 -translate-y-1/2 z-40 hidden xl:block">
             <div className="relative">
-                {/* Vertical Line */}
-                <div className="absolute left-[7px] top-2 bottom-2 w-[2px] bg-amber-900/10 rounded-full" />
+                {/* Vertical Line - Refined */}
+                <div className="absolute left-[7px] top-2 bottom-2 w-[1.5px] bg-amber-900/10 rounded-full" />
 
                 {/* Active Line Progress */}
-                <div className="flex flex-col gap-8 relative">
+                <div className="flex flex-col gap-7 relative">
                     {items.map((item) => {
                         const isActive = activeId === item.id;
 
@@ -71,23 +71,23 @@ export default function TimelineNav({ items }: { items: TimelineItem[] }) {
                                 className="group flex items-center gap-4 focus:outline-none"
                             >
                                 <div className="relative flex items-center justify-center w-4">
-                                    {/* Dot */}
+                                    {/* Dot - Refined */}
                                     <motion.div
                                         initial={false}
                                         animate={{
-                                            scale: isActive ? 1.5 : 1,
-                                            backgroundColor: isActive ? "#92400e" : "#d6d3d1",
-                                            boxShadow: isActive ? "0 0 15px rgba(146, 64, 14, 0.4)" : "none"
+                                            scale: isActive ? 1.4 : 1,
+                                            backgroundColor: isActive ? "#92400e" : "#e7e5e4",
+                                            boxShadow: isActive ? "0 0 12px rgba(146, 64, 14, 0.3)" : "none"
                                         }}
-                                        className="w-3 h-3 rounded-full relative z-10 transition-colors"
+                                        className="w-[10px] h-[10px] rounded-full relative z-10 transition-colors"
                                     />
 
                                     {/* Hover Ring */}
-                                    <div className="absolute inset-0 w-6 h-6 -left-1 rounded-full border border-amber-500/0 group-hover:border-amber-500/20 transition-all scale-0 group-hover:scale-100" />
+                                    <div className="absolute inset-0 w-5 h-5 -left-[2px] -top-0.5 rounded-full border border-amber-500/0 group-hover:border-amber-500/20 transition-all scale-0 group-hover:scale-100" />
                                 </div>
 
-                                {/* Label */}
-                                <div className="relative h-6 flex items-center">
+                                {/* Label - Refined with max-width */}
+                                <div className="relative h-5 flex items-center">
                                     <AnimatePresence>
                                         <motion.span
                                             initial={{ opacity: 0, x: -10 }}
@@ -97,8 +97,8 @@ export default function TimelineNav({ items }: { items: TimelineItem[] }) {
                                                 color: isActive ? "#78350f" : "#78716c"
                                             }}
                                             className={cn(
-                                                "whitespace-nowrap font-serif text-sm font-bold tracking-tight transition-colors",
-                                                isActive ? "scale-110 origin-left" : "hover:opacity-100"
+                                                "whitespace-nowrap font-serif text-[13px] font-bold tracking-tight transition-colors max-w-[180px] truncate",
+                                                isActive ? "scale-105 origin-left" : "hover:opacity-100"
                                             )}
                                         >
                                             {item.title}

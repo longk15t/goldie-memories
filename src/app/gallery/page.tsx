@@ -42,7 +42,7 @@ export default async function GalleryPage() {
                 </div>
             </nav>
 
-            <div className="max-w-[1600px] mx-auto py-12 px-4 xl:pl-48 transition-all duration-500">
+            <div className="max-w-[1600px] mx-auto py-12 px-4 xl:pl-80 transition-all duration-500">
                 <AnimatedGalleryContainer>
                     {albums.map((album: any) => (
                         <AnimatedGallerySection key={album.id} id={album.id}>
