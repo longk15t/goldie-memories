@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Album {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  slug        String   @unique
+  coverUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  media       Media[]
+}
+
+model Media {
+  id          String   @id @default(cuid())
+  url         String
+  type        String   // 'image' | 'video'
+  mimeType    String?
+  width       Int?
+  height      Int?
+  blurDataUrl String?
+  caption     String?
+  albumId     String?
+  album       Album?   @relation(fields: [albumId], references: [id])
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+}
